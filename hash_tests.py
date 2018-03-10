@@ -17,5 +17,4 @@ while still_processing:
         still_processing = False
 
 
-
 print('The solution to y = {}'.format(y))

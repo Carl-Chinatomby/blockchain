@@ -86,12 +86,3 @@ class BlockChain():
         guess = '{}{}'.format(last_proof, proof).encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
-
-
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()
-
