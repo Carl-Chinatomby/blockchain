@@ -55,7 +55,7 @@ def new_transaction():
         return 'Missing Params', 400   #TODO Fix this response
 
     index = blockchain.new_transaction(params['sender'], params['recipient'], params['amount'])
-    response = {'message': 'Transaction will be added to the block {index}'}
+    response = {'message': 'Transaction will be added to the block {}'.format(index)}
     return jsonify(response), 201
 
 
