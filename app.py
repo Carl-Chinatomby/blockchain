@@ -47,7 +47,7 @@ def mine():
 def new_transaction():
     """
     """
-    params = request.get_json()
+    params = request.form.to_dict()
 
     # verify required params
     required_params = ('sender', 'recipient', 'amount')
