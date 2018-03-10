@@ -20,7 +20,18 @@ def mine():
 
 @app.route('/transactions/new', methods=['POST'])
 def new_transation():
-    return 'creating new transaction'
+    """
+    """
+    params = request.get_json()
+
+    # verify required params
+    required_params = ('sender', 'recipient', 'amount')
+    if not all(required_param in params for required_param in required_params):
+        return 'Missing Params', 400   #TODO Fix this response
+
+    index = blockchain.new_transaction(params['sender'], params['recipient'], params['amount'])
+    response = {'message': 'Transaction will be added to the block {index}'}
+    return jsonify(response), 201
 
 @app.route('/chain', methods=['GET'])
 def full_chain():
@@ -28,7 +39,7 @@ def full_chain():
         'chain': blockchain.chain,
         'length': len(blockchain.chain)
     }
-    reurn jsonify(response, 200)
+    return jsonify(response, 200)
 
 
 if __name__ == "__main__":
