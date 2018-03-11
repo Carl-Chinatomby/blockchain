@@ -52,7 +52,7 @@ def new_transaction():
     # verify required params
     required_params = ('sender', 'recipient', 'amount')
     if not all(required_param in params for required_param in required_params):
-        return 'Missing Params', 400   #TODO Fix this response
+        return 'Missing Params', 400   #TODO Fix these responses
 
     index = blockchain.new_transaction(params['sender'], params['recipient'], params['amount'])
     response = {'message': 'Transaction will be added to the block {}'.format(index)}
@@ -67,6 +67,42 @@ def full_chain():
     }
     return jsonify(response), 200
 
+
+@app.route('/nodes/register', methods=['POST'])
+def register_nodes():
+    params = request.form.to_dict()
+
+    nodes = params.get('nodes')
+    if nodes is None:
+        return "Error: Please supply a list of nodes", 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        'message': 'Nodes have been registered',
+        'total_nodes': list(blockchain.nodes)
+    }
+    return jsonify(response), 201
+
+
+@app.route('/nodes/resolve', methods=['GET'])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            'message': 'Chain was replaced',
+            'new_chain': blockchain.chain,
+        }
+    else:
+        response = {
+            'message': 'The chain is authoritative ',
+            'chain': blockchain.chain
+        }
+
+
+    return jsonify(response), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
