@@ -1,12 +1,13 @@
-FROM python:3.6.1
+FROM python:3.7.4
 
 WORKDIR /var/app
 ENV PYTHONPATH=${PYTHONPATH}:/var/app/blockchain
-RUN /usr/local/bin/pip install pip==9.0.1
+RUN /usr/local/bin/pip install pip==19.1.1
+
+RUN python3 -m venv /opt/venv
 
 COPY . /var/app
 RUN pip install -r /var/app/requirements.txt
-COPY entrypoint.sh /entrypoint.sh
 
 EXPOSE 5000
-ENTRYPOINT ["/entrypoint.sh"]
+CMD /opt/venv/bin/python && exec python app.py

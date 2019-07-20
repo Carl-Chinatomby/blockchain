@@ -52,10 +52,15 @@ def new_transaction():
     # verify required params
     required_params = ('sender', 'recipient', 'amount')
     if not all(required_param in params for required_param in required_params):
-        return 'Missing Params', 400   #TODO Fix these responses
+        return 'Missing Params', 400  # TODO Fix these responses
 
-    index = blockchain.new_transaction(params['sender'], params['recipient'], params['amount'])
-    response = {'message': 'Transaction will be added to the block {}'.format(index)}
+    index = blockchain.new_transaction(
+        params['sender'],
+        params['recipient'],
+        params['amount'])
+    response = {
+        'message': 'Transaction will be added to the block {}'.format(index)
+    }
     return jsonify(response), 201
 
 
@@ -101,8 +106,8 @@ def consensus():
             'chain': blockchain.chain
         }
 
-
     return jsonify(response), 200
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
