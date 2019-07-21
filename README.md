@@ -2,19 +2,19 @@
 
 ## Installation
 
-`docker build . -t blockchain:1.0`
-`docker run -p 5000:5000 blockchain:1.0`
+1. `docker build . -t blockchain:1.0`
+1. `docker run -p 5000:5000 --mount type=bind,src=<ENTER_WORKING_DIR>,dst=/var/app blockchain:1.0`
 
 Webserver is running on 0.0.0.0:5000
 
 ## Routes
 
-### /mine
+### GET /mine
 
-### /transactions/new
+### POST /transactions/new
 
-### /chain
+### GET /chain
 
-### /nodes/register
+### POST /nodes/register
 
-### /nodes/resolve
+### GET /nodes/resolve
